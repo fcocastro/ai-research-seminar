@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Accelerated Research in OM/OR</title>
+<meta name="description" content="An exploratory online seminar series on how AI is transforming research in operations management and operations research.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Spline+Sans+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14140f;
+    --paper: #f3f0e7;
+    --paper-warm: #eae5d6;
+    --rule: #c9c2ad;
+    --accent: #2f4a3c;       /* deep evergreen */
+    --accent-bright: #c7522a; /* burnt sienna, used once */
+    --muted: #5e5a4c;
+    --maxw: 940px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+
+  .eyebrow {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---- Hero ---- */
+  header.hero {
+    padding: 72px 0 56px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .hero .eyebrow { margin-bottom: 28px; }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(2.4rem, 6.5vw, 4.4rem);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    max-width: 16ch;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero .lede {
+    margin-top: 26px;
+    font-size: clamp(1.05rem, 2vw, 1.2rem);
+    max-width: 54ch;
+    color: var(--muted);
+  }
+  .hero-actions {
+    margin-top: 36px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 13px 22px;
+    border: 1px solid var(--ink);
+    transition: background .2s, color .2s, transform .15s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+  .btn-ghost:hover { background: var(--ink); color: var(--paper); }
+
+  /* ---- Section scaffold ---- */
+  section { padding: 60px 0; border-bottom: 1px solid var(--rule); }
+  .sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 36px; }
+  .sec-head .num {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent);
+  }
+  .sec-head h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+    letter-spacing: -0.01em;
+  }
+
+  /* ---- About / goals ---- */
+  .about p.intro { font-size: 1.12rem; max-width: 62ch; margin-bottom: 32px; }
+  .goals { list-style: none; display: grid; gap: 0; max-width: 70ch; }
+  .goals li {
+    display: grid;
+    grid-template-columns: 2.2rem 1fr;
+    gap: 14px;
+    padding: 16px 0;
+    border-top: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .goals li:last-child { border-bottom: 1px solid var(--rule); }
+  .goals .mark {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent);
+  }
+
+  /* ---- Schedule ---- */
+  .talk {
+    display: grid;
+    grid-template-columns: 130px 1fr auto;
+    gap: 24px;
+    padding: 24px 0;
+    border-top: 1px solid var(--rule);
+    align-items: start;
+  }
+  .talk:last-child { border-bottom: 1px solid var(--rule); }
+  .talk .when {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--muted);
+    padding-top: 4px;
+  }
+  .talk .when strong { display: block; color: var(--ink); font-size: 1rem; }
+  .talk .what h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.3rem;
+    margin-bottom: 4px;
+  }
+  .talk .what .who { color: var(--muted); font-size: 0.95rem; }
+  .talk .what .desc { margin-top: 8px; font-size: 0.96rem; max-width: 50ch; }
+  .talk .links { display: flex; flex-direction: column; gap: 8px; align-items: stretch; min-width: 130px; }
+  .talk .links .pill { text-align: center; }
+  .pill {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 11px;
+    border: 1px solid var(--rule);
+    color: var(--muted);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: border-color .2s, color .2s;
+  }
+  a.pill:hover { border-color: var(--accent); color: var(--accent); }
+  .pill.live { border-color: var(--accent-bright); color: var(--accent-bright); }
+  .talk-note {
+    margin-top: 28px;
+    font-size: 0.9rem;
+    color: var(--muted);
+    max-width: 60ch;
+  }
+
+  /* ---- Format strip ---- */
+  .format { background: var(--paper-warm); }
+  .format-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .format-grid .cell h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+  }
+  .format-grid .cell p { font-size: 0.94rem; color: var(--muted); }
+
+  /* ---- Join ---- */
+  .join { text-align: left; }
+  .join p { max-width: 58ch; font-size: 1.05rem; margin-bottom: 12px; }
+  .join .muted-note { color: var(--muted); font-size: 0.92rem; margin-top: 18px; }
+
+  /* ---- Organizers / footer ---- */
+  footer { padding: 56px 0 72px; }
+  .organizers { display: flex; flex-wrap: wrap; gap: 8px 26px; margin-top: 16px; }
+  .organizers span { font-size: 0.96rem; }
+  .organizers span .aff { color: var(--muted); font-size: 0.82rem; }
+  .colophon {
+    margin-top: 40px;
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 680px) {
+    .talk { grid-template-columns: 1fr; gap: 10px; }
+    .talk .links { flex-direction: row; align-items: flex-start; flex-wrap: wrap; }
+    .format-grid { grid-template-columns: 1fr; gap: 22px; }
+    .sec-head { flex-direction: column; gap: 4px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto; transition: none !important; }
+  }
+  a:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Online Seminar Series</div>
+    <h1>AI-Accelerated Research in <em>Operations</em></h1>
+    <p class="lede">An exploratory forum on how AI is reshaping the way we do research &mdash; from coding assistance and proof exploration to experimentation pipelines, simulation design, and agentic systems.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#join">Join the mailing list</a>
+      <a class="btn btn-ghost" href="#schedule">See the schedule</a>
+    </div>
+  </div>
+</header>
+
+<section class="about">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>About the series</h2></div>
+    <p class="intro">AI is increasingly contributing not only to productivity but to progress on longstanding scientific and mathematical problems. Many of us are beginning to integrate it into our workflows in different ways, and this series is a place to compare notes. It is interactive and community-driven; our aim is to learn from each other as the landscape evolves.</p>
+  </div>
+</section>
+
+<section id="schedule">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>Schedule &amp; materials</h2></div>
+
+    <div class="talk">
+      <div class="when"><strong>Jun 23</strong>2026 &middot; 12 PM ET</div>
+      <div class="what">
+        <h3>An AI research workflow</h3>
+        <div class="who">Dennis Zhang &middot; Olin Business School, WashU</div>
+        <div class="desc">Our inaugural speaker shares how he integrates AI across his research process.</div>
+      </div>
+      <div class="links">
+        <a class="pill live" href="https://ucla.zoom.us/j/96211704654">Join on Zoom</a>
+        <a class="pill" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=AI-Accelerated+Research%3A+Dennis+Zhang&dates=20260623T160000Z%2F20260623T170000Z&details=An+AI+research+workflow+%E2%80%94+Dennis+Zhang+%28Olin+Business+School%2C+WashU%29.%0AZoom%3A+https%3A%2F%2Fucla.zoom.us%2Fj%2F96211704654&location=https%3A%2F%2Fucla.zoom.us%2Fj%2F96211704654" target="_blank" rel="noopener">Add to calendar</a>
+      </div>
+    </div>
+
+    <p class="talk-note"></p>
+  </div>
+</section>
+
+<section id="join" class="join">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Join the mailing list</h2></div>
+    <p>Announcements for upcoming sessions go out through our Google Group. Subscribe to get the schedule, Zoom links, and any shared materials.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="https://groups.google.com/g/ai-accelerated-research-om-or">Subscribe</a>
+    </div>
+    <p class="muted-note">Anyone interested is welcome &mdash; faculty, students, and researchers across OM, OR, CS, Econ, and related fields.</p>
+  </div>
+</section>
+
+<section id="propose" class="join">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>Propose a talk</h2></div>
+    <p>Have an AI-assisted research workflow you'd like to share? Send us a short proposal. We read every one and will be in touch after we've had a look.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSeCLvQQHisrtBwdgdFbZWv_ZIM39xkqm5FJzdrHJGYS2kKa2g/viewform">Submit a proposal</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="eyebrow">Organized by</div>
+    <div class="organizers">
+      <span>Gad Allon <span class="aff">Wharton</span></span>
+      <span>Omar Besbes <span class="aff">Columbia</span></span>
+      <span>Francisco Castro <span class="aff">UCLA Anderson</span></span>
+      <span>Jun Li <span class="aff">Michigan Ross</span></span>
+      <span>Ilan Lobel <span class="aff">NYU Stern</span></span>
+      <span>Sébastien Martin <span class="aff">Kellogg</span></span>
+    </div>
+    <div class="colophon">AI-Accelerated Research in OM/OR</div>
+  </div>
+</footer>
+
+</body>
+</html>
