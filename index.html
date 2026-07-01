@@ -143,6 +143,42 @@
   }
   .talk .what .who { color: var(--muted); font-size: 0.95rem; }
   .talk .what .desc { margin-top: 8px; font-size: 0.96rem; max-width: 50ch; }
+  .talk .what .desc.clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  /* Fade only when the text is clamped AND actually overflows. */
+  .talk .what .desc.clamp.has-more {
+    position: relative;
+  }
+  .talk .what .desc.clamp.has-more::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2.4em;
+    background: linear-gradient(to bottom, rgba(243, 240, 231, 0), var(--paper) 92%);
+    pointer-events: none;
+  }
+  .desc-toggle {
+    display: none;
+    margin-top: 8px;
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: color .2s;
+  }
+  .desc-toggle:hover { color: var(--accent-bright); }
   .talk .links { display: flex; flex-direction: column; gap: 8px; align-items: stretch; min-width: 130px; }
   .talk .links .pill { text-align: center; }
   .pill {
@@ -310,6 +346,41 @@
     <div class="colophon">AI-Accelerated Research in OM/OR</div>
   </div>
 </footer>
+
+<script>
+  (function () {
+    function initClamps() {
+      document.querySelectorAll('.talk .desc').forEach(function (desc) {
+        desc.classList.add('clamp');
+        // Only add a toggle when the clamped text actually overflows.
+        if (desc.scrollHeight - desc.clientHeight <= 4) return;
+
+        desc.classList.add('has-more');
+
+        var btn = document.createElement('button');
+        btn.className = 'desc-toggle';
+        btn.type = 'button';
+        btn.textContent = 'Read more';
+        btn.setAttribute('aria-expanded', 'false');
+        btn.style.display = 'inline-block';
+        desc.after(btn);
+
+        btn.addEventListener('click', function () {
+          var expanded = desc.classList.toggle('clamp') === false;
+          btn.textContent = expanded ? 'Show less' : 'Read more';
+          btn.setAttribute('aria-expanded', String(expanded));
+        });
+      });
+    }
+
+    // Wait for webfonts so line measurements are accurate.
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(initClamps);
+    } else {
+      window.addEventListener('load', initClamps);
+    }
+  })();
+</script>
 
 </body>
 </html>
